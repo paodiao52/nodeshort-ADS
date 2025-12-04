@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '25119435244413294');
+fbq('track', 'PageView');
+</script>
+
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=25119435244413294&ev=PageView&noscript=1"/>
+</noscript>
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>NodeShort — Xem phim ngắn, nhận thưởng mỗi ngày</title>
+<style>
+    :root{
+      --bg1:#fff8e1;--bg2:#ffefba;--text:#1a1a1a;--muted:#4f4f4f;
+      --gold1:#FFD700;--gold2:#FFCC33;
+      --border:rgba(234,190,63,.35);
+      --shadow:0 10px 30px rgba(0,0,0,.08);
+    }
+    html,body{margin:0;padding:0;background:linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,'Noto Sans',sans-serif}
+    a{color:inherit;text-decoration:none}
+
+    /* Header */
+    header.brand{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 14px 10px}
+    .brand-box{display:flex;align-items:center;gap:12px}
+    .brand-box img{width:88px;height:88px;border-radius:18px}
+    .brand-name{font-size:28px;font-weight:800;line-height:1;
+      background:linear-gradient(90deg,var(--gold1),var(--gold2));
+      -webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.5px}
+    h1{font-size:22px;margin:6px 0 0;color:#7a5a00;text-align:center}
+    .sub{font-size:14px;color:#6a5a2a;text-align:center}
+
+    .container{width:min(1100px,96%);margin:0 auto}
+
+    /* Main poster (vertical, blended background, no card/padding) */
+    .poster{margin:12px auto 0}
+    .poster .poster-wrap{display:flex;justify-content:center}
+    .poster img{width:min(651px, 90vw);aspect-ratio:651/868;height:auto;object-fit:cover;border-radius:12px}
+
+    .synopsis{margin-top:12px;font-size:15px;line-height:1.7;color:#333;max-width:min(651px, 90vw);margin-left:auto;margin-right:auto}
+
+    /* Hint text above CTA */
+    .cta-hint{margin:14px auto 6px;max-width:650px;text-align:center;font-size:14px;color:#7a5a00;
+      padding:8px 10px;border-radius:10px;background:rgba(255,230,150,.35);border:1px solid rgba(234,190,63,.45)}
+
+    /* Unified bright-gold buttons */
+    .btn{display:flex;justify-content:center;align-items:center;gap:8px;border-radius:999px;
+      padding:14px 16px;font-weight:800;font-size:clamp(14px, 3.5vw, 17px); cursor:pointer;transition:.25s;
+      background:linear-gradient(90deg,var(--gold1),var(--gold2));color:#111;
+      box-shadow:0 10px 25px rgba(255,200,0,.45);letter-spacing:.2px;white-space:normal;text-align:center;line-height:1.25;max-width:100%;
+      border:2px solid rgba(255,215,0,.6)}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 2px 34px rgba(255,200,0,.6)}
+
+    .cta-wrap{display:flex;justify-content:center;margin:8px auto 0}
+    .cta-wrap .btn{width:420px;max-width:100%}
+
+    /* Carousel 3-up showing 12 items */
+    .hero{position:relative;margin:18px auto 0;border-radius:16px;overflow:hidden;border:1px solid var(--border);
+      background:rgba(255,255,255,.28);box-shadow:var(--shadow)}
+    .carousel{overflow:hidden}
+    .track{display:flex;will-change:transform}
+    .slide{flex:0 0 calc(100%/3);padding:8px;box-sizing:border-box}
+    .media{width:100%;height:220px;object-fit:cover;border-radius:12px}
+    .hero-caption{padding:10px;text-align:center;color:#7a5a00;font-weight:700}
+
+    /* Tagline */
+    .tagline{margin:16px auto 0;text-align:center;color:#7a5a00;font-weight:800}
+    .tagline .s1{display:block;font-size:18px}
+    .tagline .s2{display:block;font-size:16px;color:#5a4400}
+
+    /* Footer */
+    footer{margin:16px 0 26px;text-align:center;color:#4f4f4f;font-size:12px;padding-top:10px}
+    footer a{color:#663e00;text-decoration:underline}
+
+    /* Mobile tweaks */
+    @media (max-width: 768px){
+      .brand-name{font-size:24px}
+      h1{font-size:18px}
+      .cta-wrap .btn{width:90%; margin:0 auto}
+      .media{height:180px}
+    }
+  
+.btn, .fixed-button {
+  display: inline-flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  line-height: 1.35 !important;
+}
+
+
+@media (min-width: 769px) {
+  .desktop-cta-center {
+    text-align:center !important;
+  }
+  .mobile-fixed-cta {
+    display:none !important;
+  }
+}
+
+
+    /* CTA animation variants for A/B testing */
+    .btn-anim-pulse { animation: btnPulse 1.8s infinite; }
+    .btn-anim-glow  { animation: btnGlow 2.4s infinite; }
+    .btn-anim-pop   { animation: btnPop 2.2s infinite; }
+
+    @keyframes btnPulse {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.04); }
+      100% { transform: scale(1); }
+    }
+    @keyframes btnGlow {
+      0%   { box-shadow:0 10px 25px rgba(255,200,0,.45); }
+      50%  { box-shadow:0 14px 30px rgba(255,210,0,.85); }
+      100% { box-shadow:0 10px 25px rgba(255,200,0,.45); }
+    }
+    @keyframes btnPop {
+      0%   { transform: translateY(0) scale(1); }
+      40%  { transform: translateY(-2px) scale(1.03); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+</style>
+<style>
+/* === Dual Carousel + Mobile 3-up shift1 + CTA fix + Pixel (25119435244413294) (2025-10-19) === */
+.carousel.desktop{ display:block; }
+.carousel.mobile{ display:none; }
+
+@media (max-width:768px){
+  .carousel.desktop{ display:none !important; }
+  .carousel.mobile{ display:block !important; overflow:hidden; }
+  .carousel.mobile .track{ display:flex; gap:0; will-change:transform; }
+  .carousel.mobile .slide{ flex:0 0 calc(100%/3); display:flex; align-items:center; justify-content:center; }
+  .carousel.mobile .media{ width:100%; height:auto; object-fit:contain; object-position:center center; border-radius:12px; }
+  /* CTA width fix */
+  #btn-register, .fb-cta, .cta-unified, .cta-wrap .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:90% !important; max-width:520px !important; min-width:0; box-sizing:border-box;
+    margin-left:auto; margin-right:auto; height:auto !important;
+    white-space:normal; word-break:break-word; overflow-wrap:anywhere; text-align:center;
+  }
+  .cta-wrap, .cta-wrap-centered{ flex-wrap:wrap; gap:10px; }
+}
+</style>
+<style>
+@media (max-width: 768px){
+
+  /* HEADER */
+  header.brand{padding:12px 10px 6px !important;}
+  .brand-box img{width:60px !important;height:60px !important;}
+  .brand-name{font-size:22px !important;}
+  h1{font-size:16px !important;margin-top:4px !important;}
+  .sub{font-size:13px !important;}
+
+  /* CAROUSEL */
+  .hero{margin-top:12px !important;border-radius:12px !important;}
+  .carousel.desktop{display:none!important;}
+  .carousel.mobile{display:block!important;}
+  .carousel.mobile .media{
+      width:100%!important;
+      height:auto!important;
+      border-radius:12px!important;
+  }
+
+  /* CTA button */
+  a.btn, .btn{
+    width:100%!important;
+    max-width:100%!important;
+    padding:14px 0!important;
+    font-size:18px!important;
+    border-radius:14px!important;
+  }
+
+  /* Xu + Event cards */
+  .xu-box, .event-box{
+    padding:16px 14px!important;
+    border-radius:14px!important;
+    background:rgba(255,255,255,0.75)!important;
+  }
+  .xu-item, .event-list li, .event-box p{
+    font-size:15px!important;
+    line-height:1.55!important;
+  }
+
+  /* Tagline */
+  .tagline .s1{font-size:16px!important;}
+  .tagline .s2{font-size:14px!important;}
+
+  /* Footer */
+  footer{font-size:11px!important;margin-top:10px!important;}
+}
+</style>
+
+
+<style>
+@media (max-width:768px){
+  .mobile-fixed-cta{
+    position:fixed;
+    left:50%;
+    bottom:14px;
+    transform:translateX(-50%);
+    width:88%;
+    z-index:9999;
+    display:flex;
+    justify-content:center;
+  }
+  .mobile-fixed-cta .btn{
+    width:100% !important;
+    padding:14px 0 !important;
+    border-radius:14px !important;
+  }
+}
+</style>
+
+</head>
+<body>
+<!-- Header -->
+<header class="brand container">
+<div class="brand-box">
+<img alt="NodeShort Logo" src="400.png"/>
+<span class="brand-name">NodeShort</span>
+</div>
+<h1>🎬 NodeShort — Xem phim ngắn, nhận thưởng mỗi ngày</h1>
+<div class="sub">Giải trí thông minh · Kiếm lợi nhuận bền vững từ hệ sinh thái phim ngắn toàn cầu 🌍</div>
+</header>
+<!-- Carousel: show 3, loop 12 -->
+
+
+<!-- Main Poster + Synopsis (vertical, blended) -->
+
+<!-- CTA helper text (ABOVE button) -->
+<!-- CTA -->
+
+
+
+
+<style>
+.xu-card{margin:20px auto 0;}
+.xu-box{
+  background:rgba(255,255,255,0.55);
+  border:1px solid rgba(234,190,63,.45);
+  border-radius:14px;
+  padding:18px 20px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  color:#5a4400;
+  line-height:1.65;
+}
+.xu-title{
+  font-size:20px;
+  font-weight:800;
+  margin-bottom:8px;
+  color:#7a5a00;
+}
+.xu-item{margin:10px 0;font-size:15px;}
+.xu-note{font-size:13px;color:#6a5a2a;}
+</style>
+
+
+<section class="event-card container">
+  <div class="event-box">
+    <h2 class="event-title">📘 Hướng dẫn sử dụng dành cho người dùng mới NodeShort</h2>
+
+    <p><strong>1. Nhấn nút liên kết để vào trang chủ và đăng ký trở thành người dùng NodeShort.</strong></p>
+
+    <p><strong>2. Vào mục “Ưu đãi” trên trang web:</strong></p>
+    <p>a. <strong>Nhấn Điểm danh</strong> để nhận thưởng Xu. Điểm danh đủ 7 ngày liên tiếp sẽ nhận thêm thưởng Kim cương.<br>
+    <span class="event-note">(Xu và Kim cương có thể dùng để mở khóa các tập phim và tham gia thêm nhiều hoạt động đổi thưởng trong hệ thống.)</span></p>
+
+    <p>b. <strong>Hoàn thành “Nhiệm vụ người mới”</strong>, bạn sẽ nhận được Xu, Kim cương và điểm DP.<br>
+    <span class="event-note">(Điểm DP giúp mở thêm quyền lợi trong tài khoản)</span></p>
+
+    <p><strong>3. Xem phim ngắn để nhận Xu.</strong><br>
+    Trong giao diện xem phim, nút nhận thưởng nằm bên phải màn hình, mỗi 30 giây có thể nhận một lần.</p>
+
+    <h3 class="event-sec">⭐️ Lưu ý:</h3>
+    <p>a. Mỗi lần phải nhấn “Nhận ngay” để hệ thống tiếp tục làm mới và tặng Xu.</p>
+    <p>b. Xu, Kim cương và điểm DP nhận được khi xem phim cần được đổi theo đúng quy định của các sự kiện hiện hành<br>(Chi tiết sự kiện vui lòng liên hệ CSKH chính thức để được hỗ trợ).</p>
+
+    <p>Giá trị Kim cương được quy định bởi hệ thống và có thể thay đổi theo chương trình ưu đãi.</p>
+
+<div style="text-align:center;margin-top:16px;">
+  <a class="btn" id="btn-register" href="https://www.nodeshort.com/h5/#/?code=3P15P0&from_lp=1" >👉 👉 Miễn phí – Nhấn để bắt đầu ngay</a>
+</div>
+</div>
+</section>
+
+<style>
+.event-card{margin:20px auto 0;}
+.event-box{
+  background:rgba(255,255,255,0.55);
+  border:1px solid rgba(234,190,63,.45);
+  border-radius:14px;
+  padding:18px 20px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  color:#5a4400;
+  line-height:1.65;
+}
+.event-title{
+  font-size:20px;
+  font-weight:800;
+  margin-bottom:8px;
+  color:#7a5a00;
+}
+.event-sec{
+  margin-top:14px;
+  margin-bottom:4px;
+  font-weight:700;
+  color:#7a5a00;
+}
+.event-list{padding-left:18px;margin:6px 0;}
+.event-warning{color:#c0392b;font-weight:700;margin-top:10px;}
+.event-footnote{font-size:13px;color:#6a5a2a;margin-top:10px;}
+</style>
+
+
+<!-- Tagline -->
+<div class="tagline container">
+<span class="s1">Cập nhật mỗi ngày.</span>
+<span class="s2">Hàng nghìn bộ phim ngắn toàn cầu đang chờ bạn!</span>
+</div>
+<!-- Footer -->
+<footer class="container">
+    © 2025 NodeShort · Hệ sinh thái phim ngắn kết hợp tài chính.<br/>
+    NodeShort PTE. LTD. · <a href="mailto:support@nodeshort.com">support@nodeshort.com</a>
+</footer>
+<!-- Carousel & Fallback JS -->
+<script src="carousel.js?v=6"></script>
+<script>
+  // JPG/PNG auto-fallback loader
+  function setSrcWithFallback(img, base){
+    const jpg = base + '.jpg';
+    const png = base + '.png';
+    img.onerror = function(){
+      if(img.dataset.fallbackTried) return;
+      img.dataset.fallbackTried = '1';
+      img.src = png;
+    };
+    img.src = jpg;
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    // main poster
+    const main = document.getElementById('mainPoster');
+    if(main){ setSrcWithFallback(main, main.dataset.base); }
+    // carousel images
+    document.querySelectorAll('img.lazy[data-base]').forEach(function(el){
+      setSrcWithFallback(el, el.dataset.base);
+    });
+    // pixel event
+    var reg=document.getElementById('btn-register');
+    if(reg){ reg.addEventListener('click', function(){ fbq('track','Lead',{content_name:'ContinueWatch'}); }); }
+  });
+  </script>
+<script>
+(function () {
+  function syncFbCtaWidth() {
+    try {
+      var first = Array.from(document.querySelectorAll('a,button'))
+        .find(function (el) {
+          return /Tiếp tục xem/i.test((el.textContent || '').trim());
+        });
+      var fb = document.querySelector('.fb-promo .fb-cta') ||
+               Array.from(document.querySelectorAll('a,button'))
+                 .find(function (el) {
+                   return /Tham gia nhóm Facebook/i.test((el.textContent || '').trim());
+                 });
+      if (!first || !fb) return;
+      var rect = first.getBoundingClientRect();
+      var w = rect && rect.width ? rect.width : 0;
+      if (w > 0) {
+        fb.style.width = w + 'px';
+        fb.style.maxWidth = w + 'px';
+        fb.style.display = 'block';
+        fb.style.marginLeft = 'auto';
+        fb.style.marginRight = 'auto';
+      }
+    } catch (e) {}
+  }
+  window.addEventListener('DOMContentLoaded', syncFbCtaWidth);
+  window.addEventListener('load', syncFbCtaWidth);
+  window.addEventListener('resize', syncFbCtaWidth);
+  window.addEventListener('orientationchange', syncFbCtaWidth);
+})();
+</script>
+<!-- === LP: 点击继续观看 -> 跳注册页 + 携带ns_uid/来源参数 + 点击埋点 (2025-10-19) === -->
+<script>
+(function(){
+  function uuid(){return'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0,v=c==='x'?r:(r&0x3|0x8);return v.toString(16);});}
+  function setCookie(k,v,days){const t=new Date();t.setTime(t.getTime()+days*864e5);document.cookie=`${k}=${encodeURIComponent(v)};path=/;max-age=${days*86400}`;}
+  function getCookie(k){return document.cookie.split('; ').find(r=>r.startsWith(k+'='))?.split('=')[1]}
+  let ns_uid = localStorage.getItem('ns_uid') || getCookie('ns_uid');
+  if(!ns_uid){ ns_uid = uuid(); localStorage.setItem('ns_uid', ns_uid); setCookie('ns_uid', ns_uid, 365); }
+  const url = new URL(location.href);
+  const keys = ['fbclid','gclid','utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+  const src = {}; keys.forEach(k=>{ const v = url.searchParams.get(k) || getCookie(k); if(v){ setCookie(k,v,30); src[k]=v; } });
+  var H5_REGISTER_URL = 'https://www.nodeshort.com/h5/#/?code=3P15P0&from_lp=1';
+  var continueBtn = document.querySelector('#btn-register');
+  function sendFb(name, data, eid){
+    try{{ fbq('trackCustom', name, Object.assign({ external_id: (localStorage.getItem('ns_uid')||ns_uid) }, data||{{}}), {{ eventID: eid||uuid() }}) }}catch(e){{}}
+  }
+  if(continueBtn){
+    continueBtn.addEventListener('click', function(){
+      var clickEID = uuid();
+      sendFb('LP_Click_Register', { placement:(innerWidth<=768?'mobile':'desktop') }, clickEID);
+      var u = new URL(H5_REGISTER_URL);
+      u.searchParams.set('extid', ns_uid);
+      u.searchParams.set('click_eid', clickEID);
+      Object.entries(src).forEach(([k,v])=>u.searchParams.set(k,v));
+      continueBtn.setAttribute('href', u.toString());
+    }, {passive:true});
+  }
+})();
+</script>
+
+<script>
+// ScrollDepth
+let scrollTracked = false;
+window.addEventListener('scroll', function(){
+    if(!scrollTracked && window.scrollY > 150){
+        fbq('trackCustom', 'ScrollDepth');
+        scrollTracked = true;
+    }
+});
+
+// LandingEngagement (click any link)
+document.addEventListener('click', function(e){
+    if(e.target.tagName === 'A'){
+        fbq('trackCustom', 'LandingEngagement');
+    }
+});
+
+// TimeOnPage ≥ 10s
+setTimeout(function(){
+    fbq('trackCustom', 'TimeOnPage10s');
+}, 10000);
+</script>
+
+
+<div class="mobile-fixed-cta">
+  <a class="btn"
+     href="https://www.nodeshort.com/h5/#/?code=3P15P0&from_lp=1"
+     onclick="fbq('track', 'Lead'); fbq('trackCustom','IntentToRegister');">
+     👉 👉 Miễn phí – Nhấn để bắt đầu ngay
+  </a>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  try {
+    var variants = ['btn-anim-pulse','btn-anim-glow','btn-anim-pop'];
+    var chosen = variants[Math.floor(Math.random() * variants.length)];
+    var targets = document.querySelectorAll('#btn-register, .mobile-fixed-cta .btn');
+    targets.forEach(function(btn){
+      btn.classList.add(chosen);
+    });
+  } catch (e) {}
+});
+</script>
+
+</body>
+</html>
